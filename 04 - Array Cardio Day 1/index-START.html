@@ -34,31 +34,94 @@
       'Berne, Eric', 'Berra, Yogi', 'Berry, Wendell', 'Bevan, Aneurin', 'Ben-Gurion, David', 'Bevel, Ken', 'Biden, Joseph', 'Bennington, Chester', 'Bierce, Ambrose',
       'Billings, Josh', 'Birrell, Augustine', 'Blair, Tony', 'Beecher, Henry', 'Biondo, Frank'
     ];
-    
+
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    const oldest = inventors.filter((inventor) => inventor.year >= 1500 && inventor.year < 1600);
+    console.table(oldest);
+
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
+    const names = inventors.map((inventor) => {
+      return `${inventor.first} ${inventor.last}`;
+    });
+
+    console.table(names);
+
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    // const age = inventors.sort((a, b) => {
+    //   if (a.year > b.year) {
+    //     return 1;
+    //   } else {
+    //     return -1;
+    //   }
+    // });
+
+    const ordered = inventors.sort((a, b) => a.year > b.year ? 1 : -1)
+
+
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
+    const liveTogether = inventors.reduce((total, inventor) => {
+      return total + (inventor.passed - inventor.year);
+    }, 0)
+
+    console.log(liveTogether)
 
     // 5. Sort the inventors by years lived
+    const mostYears = inventors.sort((a, b) => {
+      const lastGuy = a.passed - a.year;
+      const nextGuy = b.passed - b.year;
+      return lastGuy > nextGuy ? -1 : 1;
+      // if (lastGuy > nextGuy) {
+      //   return -1;
+      // } else {
+      //   return 1;
+      // }
+    });
 
-    // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
-    // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+    console.log(mostYears);
 
+    // // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
+    // // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+    // const boulevards = document.querySelector('.mw-category');
+    // // you can call querySelector on any existing dom element to look inside it
+    // const links = category.querySelectorAll('.a');
+    // // convert node list to array
+    // linksArray = Array.from(links);
+    // // text inside the link
+    // const de = links
+    //   .map(link => link.textContent)
+    //   .filter(streetName => streetName.includes('de'))
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    const alpha = people.sort((lastOne, newOne) => {
+      const [alast, afirst] = lastOne.split(', ');
+      const [blast, bfirst] = newOne.split(', ');
+      return alast > blast ? 1 : -1;
+    });
+    console.log(alpha);
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+
+    const transport = data.reduce((object, item) => {
+      if(!object[item]) {
+        object[item] = 0;
+      }
+      object[item]++;
+      return object;
+
+      // blank object which we'll store data in
+     }, {});
+     console.log(transport);
+
 
   </script>
 </body>
