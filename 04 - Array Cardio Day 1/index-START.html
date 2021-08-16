@@ -112,12 +112,14 @@
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
 
     const transport = data.reduce((object, item) => {
+      // if item isn't in the object yet
       if(!object[item]) {
+        // make an entry for it
         object[item] = 0;
       }
+      // otherwise add 1 to that item
       object[item]++;
       return object;
-
       // blank object which we'll store data in
      }, {});
      console.log(transport);
