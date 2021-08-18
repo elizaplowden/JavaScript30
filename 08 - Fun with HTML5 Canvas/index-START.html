@@ -7,6 +7,74 @@
 <body>
 <canvas id="draw" width="800" height="800"></canvas>
 <script>
+  const canvas = document.querySelector('#draw');
+  const context = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  context.strokeStyle = '#BADA55';
+  // caterpillar style!
+  context.lineJoin = 'round';
+  context.lineCap = 'round';
+  // thickness of brush
+  context.lineWidth = 100;
+  // to blend colours;
+  // context.globalCompositeOperation = 'multiply';
+
+  let isDrawing = false;
+  let lastX = 0;
+  let lastY = 0;
+  let hue = 0;
+  // building up
+  let direction = true;
+
+  function draw(event) {
+    // stops function from running when not mouse down
+    if(!isDrawing) return;
+    console.log(event);
+    // starts color at red for eg
+    context.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+    // could change width along with hue
+    // context.lineWidth = hue;
+    context.beginPath();
+    // start from
+    context.moveTo(lastX, lastY);
+    // go to
+    context.lineTo(event.offsetX, event.offsetY);
+    context.stroke();
+    // destructuring array
+    [lastX, lastY] = [event.offsetX, event.offsetY]
+    // lastX = event.offsetX;
+    // lastY = event.offsetY;
+    hue++;
+    // reset the hue
+    if(hue >= 360) {
+      hue = 0;
+    }
+    // incrementing line width from 0-100
+    if(context.lineWidth >= 100 || context.lineWidth <= 1) {
+      // flip direction
+      direction = !direction;
+    }
+    // depending on what direction is,
+    if(direction) {
+      // we imcrement the line width
+      context.lineWidth++;
+    } else {
+      // or decrease it
+      context.lineWidth--;
+    }
+  }
+
+  canvas.addEventListener('mousedown', () => {
+    isDrawing = true;
+    [lastX, lastY] = [event.offsetX, event.offsetY];
+  });
+
+
+  canvas.addEventListener('mousemove', draw);
+  canvas.addEventListener('mouseup', () => isDrawing = false);
+  canvas.addEventListener('mouseout', () => isDrawing = false);
+
 </script>
 
 <style>
