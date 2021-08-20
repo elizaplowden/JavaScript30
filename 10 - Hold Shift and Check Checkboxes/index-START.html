@@ -96,6 +96,43 @@
   </div>
 
 <script>
+  // select every checkbox
+  const checkboxes = document.querySelectorAll('.inbox input[type="checkbox"]');
+  // console.log(checkboxes);
+
+  // will be constantly reassigned
+  let lastChecked;
+
+  function handleCheck(event) {
+    // check if they had the shift key down
+    // and check that they are checking it (not unchecking)
+    let inBetween = false;
+    if(event.shiftKey && this.checked) {
+      // go ahead and do what we want
+      // loop over every checkbox
+      checkboxes.forEach(checkbox => {
+        console.log(checkbox);
+        // if the checkbox = same one we're looking over
+        // or if the checkbox is the same as last checked
+        if(checkbox === this || checkbox === lastChecked) {
+          // finish checkbox - if true it's false/if false it's true
+          inBetween = !inBetween;
+          console.log('starting to check them inbetween');
+        }
+        if(inBetween) {
+          // then tick the ones in between
+          checkbox.checked = true;
+        }
+      });
+    }
+    //
+    // reference to the input that was last checked
+    lastChecked = this;
+  }
+  // listen for when one of them is clicked or changed
+  checkboxes.forEach(checkbox => checkbox.addEventListener('click', handleCheck));
+
+
 </script>
 </body>
 </html>
